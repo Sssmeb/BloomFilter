@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9af6ce80-93f4-4c2e-8580-60e2824d157c" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BloomFilter.py" beforeDir="false" afterPath="$PROJECT_DIR$/BloomFilter.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,8 +16,8 @@
       <file leaf-file-name="BloomFilter.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/BloomFilter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1230">
-              <caret line="41" column="29" lean-forward="true" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
+            <state relative-caret-position="393">
+              <caret line="88" column="43" lean-forward="true" selection-start-line="88" selection-start-column="43" selection-end-line="88" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -44,7 +43,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-1970" />
     <option name="y" value="58" />
     <option name="width" value="3860" />
@@ -113,16 +112,16 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Python Console" />
-      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.33146697" />
+      <window_info anchor="bottom" id="Terminal" weight="0.2530795" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26226014" />
       <window_info anchor="bottom" id="Statistic" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32922733" />
       <window_info anchor="right" id="SciView" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -140,8 +139,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/BloomFilter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1230">
-          <caret line="41" column="29" lean-forward="true" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
+        <state relative-caret-position="393">
+          <caret line="88" column="43" lean-forward="true" selection-start-line="88" selection-start-column="43" selection-end-line="88" selection-end-column="43" />
         </state>
       </provider>
     </entry>
