@@ -4,7 +4,10 @@
 # @File    : BloomFilter.py
 # @Software: PyCharm
 # @Python3.6
+__version__ = '0.0.1'
+
 import math
+import copy
 try:
     import bitarray
 except ImportError:
@@ -25,6 +28,13 @@ class BloomFilter(object):
         :param error_rate:  可接受的误报率，默认0.001
 
         通过这两个参数来确定需要多少个哈希函数以及位数组的大小
+
+        >>> bf = BloomFilter(data_size=100000, error_rate=0.001)
+        >>> bf.add("test")
+        True
+        >>> "test" in b
+        True
+
         """
 
         if not data_size > 0:
@@ -48,6 +58,15 @@ class BloomFilter(object):
         self._data_count = 0
 
     def add(self, key):
+        """
+        :param key: 要添加的数据
+        :return:
+
+        >>> bf = BloomFilter(data_size=100000, error_rate=0.001)
+        >>> bf.add("test")
+        True
+
+        """
         if self._is_half_fill():
             raise IndexError("The capacity is insufficient")
 
@@ -60,13 +79,12 @@ class BloomFilter(object):
 
     def is_exists(self, key):
         """
-        判断该值是否存在
-        有任意一位为0 则肯定不存在
-
         :param key:
         :return:
-        """
 
+        判断该值是否存在
+        有任意一位为0 则肯定不存在
+        """
         for time in range(self._hash_num):
             key_hashed_idx = mmh3.hash(key, self._hash_seed[time]) % self._bit_num
             if not self._bit_array[key_hashed_idx]:
@@ -75,25 +93,25 @@ class BloomFilter(object):
 
     def copy(self):
         """
+        :return: 返回一个完全相同的布隆过滤器实例
 
         复制一份布隆过滤器的实例
-        :return:
+
         """
         new_filter = BloomFilter(self.data_size, self.error_rate)
         return self._copy_param(new_filter)
 
     def _copy_param(self, filter):
-        filter._bit_array = self._bit_array
+        filter._bit_array = copy.deepcopy(self._bit_array)
         filter._bit_num = self._bit_num
         filter._hash_num = self._hash_num
-        filter._hash_seed = self._hash_seed
+        filter._hash_seed = copy.deepcopy(self._hash_seed)
         filter._data_count = self._data_count
         return filter
 
     def _is_half_fill(self):
         """
         判断数据是否已经超过容量的一半
-        :return:
         """
         return self._data_count > (self._hash_num // 2)
 
@@ -125,11 +143,13 @@ class BloomFilter(object):
 
     def __contains__(self, key):
         """
-
-        :param key:
-        :return:
-
         用于实现 in 判断
+
+        >>> bf = BloomFilter(data_size=100000, error_rate=0.001)
+        >>> bf.add("test")
+        True
+        >>> "test" in bf
+        True
         """
         return self.is_exists(key)
 
