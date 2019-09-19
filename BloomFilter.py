@@ -36,7 +36,7 @@ class BloomFilter(object):
         self.error_rate = error_rate
 
         bit_num, hash_num = self._adjust_param(data_size, error_rate)
-        self._bit_array = bitarray(bit_num)
+        self._bit_array = bitarray.bitarray(bit_num)
         self._bit_array.setall(0)
         self._bit_num = bit_num
         self._hash_num = hash_num
@@ -112,10 +112,10 @@ class BloomFilter(object):
         """
         p = error_rate
         n = data_size
-        m = n * (math.log10(p)) / (math.log10(2))**2
+        m = - (n * (math.log10(p)) / (math.log10(2))**2)
         k = m / n * math.log10(2)
 
-        return m, k
+        return int(m), int(k)
 
     def __len__(self):
         """"
@@ -132,3 +132,27 @@ class BloomFilter(object):
         用于实现 in 判断
         """
         return self.is_exists(key)
+
+
+if __name__ == '__main__':
+    bf = BloomFilter(10000000, 0.0001)
+    print(bf._bit_num, bf._hash_num)
+
+    a = ['when', 'how', 'where', 'too', 'there', 'to', 'when']
+    for i in a:
+        print(bf.add(i))
+
+    print('xixi in bf?: ', 'xixi' in bf)
+
+    b = ['when', 'xixi', 'haha']
+    for i in b:
+        if bf.is_exists(i):
+            print('%s exist' % i)
+        else:
+            print('%s not exist' % i)
+
+    print('bf had load data: ', len(bf))
+
+
+    new_bf = bf.copy()
+    print('new_bf had load data: ', len(bf))
