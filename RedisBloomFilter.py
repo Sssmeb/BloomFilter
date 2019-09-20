@@ -23,8 +23,18 @@ class RedisFilter(BloomFilter):
         self.server = redis.Redis(host=host, port=port, db=db)
         self.redis_key = redis_key
 
-    def start(self, data_size, error_rate=0.001):
+        # 已存数据量
+        self._data_count = 0
 
+    def start(self, data_size, error_rate=0.001):
+        """
+
+        :param data_size: 所需存放数据的数量
+        :param error_rate:  可接受的误报率，默认0.001
+        :return:
+
+        启动函数，通过数据量、误报率 确定位数组长度、哈希函数个数、哈希种子等
+        """
         if not data_size > 0:
             raise ValueError("Capacity must be > 0")
         if not (0 < error_rate < 1):
@@ -41,8 +51,7 @@ class RedisFilter(BloomFilter):
         # 将哈希种子固定为 1 - hash_num （预留持久化过滤的可能）
         self._hash_seed = [i for i in range(1, hash_num+1)]
 
-        # 已存数据量
-        self._data_count = 0
+        return True
 
     def add(self, key):
         """
@@ -83,26 +92,27 @@ class RedisFilter(BloomFilter):
         return True
 
 
-bf = RedisFilter()
-bf.start(100000000, 0.0001)
-# print(bf._bit_num, bf._hash_num)
-# print(bf._block_num)
-# print(bf._bit_num)
-# a = ['when', 'how', 'where', 'too', 'there', 'to', 'when']
-# for i in a:
-#     print(bf.add(i))
-#
-# print('xixi in bf?: ', 'xixi' in bf)
-#
-# b = ['when', 'xixi', 'haha']
-# for i in b:
-#     if bf.is_exists(i):
-#         print('%s exist' % i)
-#     else:
-#         print('%s not exist' % i)
-#
-# print('bf had load data: ', len(bf))
-#
+if __name__ == '__main__':
 
-new_bf = bf.copy()
-print('new_bf had load data: ', len(new_bf))
+    bf = RedisFilter()
+    bf.start(100000000, 0.0001)
+    # 仅测试输出，正常使用时透明
+    print(bf._bit_num, bf._hash_num)
+    print(bf._block_num)
+    print(bf._bit_num)
+
+    a = ['when', 'how', 'where', 'too', 'there', 'to', 'when']
+    for i in a:
+        print(bf.add(i))
+
+    print('xixi in bf?: ', 'xixi' in bf)
+
+    b = ['when', 'xixi', 'haha']
+    for i in b:
+        if bf.is_exists(i):
+            print('%s exist' % i)
+        else:
+            print('%s not exist' % i)
+
+    print('bf had load data: ', len(bf))
+
