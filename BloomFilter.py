@@ -130,8 +130,8 @@ class BloomFilter(object):
         """
         p = error_rate
         n = data_size
-        m = - (n * (math.log10(p)) / (math.log10(2))**2)
-        k = m / n * math.log10(2)
+        m = - (n * (math.log(p, math.e)) / (math.log(2, math.e))**2)
+        k = m / n * math.log(2, math.e)
 
         return int(m), int(k)
 
