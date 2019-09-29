@@ -1,4 +1,5 @@
 
+布隆过滤器相关知识详解：https://www.jianshu.com/p/e4773b69319d
 
 # BloomFilter
 BloomFilter Based on py3(基于py3的布隆过滤器)
