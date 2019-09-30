@@ -32,7 +32,7 @@ class BloomFilter(object):
         >>> bf = BloomFilter(data_size=100000, error_rate=0.001)
         >>> bf.add("test")
         True
-        >>> "test" in b
+        >>> "test" in bf
         True
 
         """

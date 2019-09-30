@@ -8,6 +8,7 @@ import redis
 from BloomFilter import BloomFilter
 import mmh3
 import math
+from utils import acquire_lock_with_timeout, release_lock
 
 
 class RedisFilter(BloomFilter):
@@ -68,12 +69,20 @@ class RedisFilter(BloomFilter):
 
         keyname = self.redis_key + str(sum(map(ord, key)) % self._block_num)
 
+        key_hashed_idx = []
         for time in range(self._hash_num):
-            key_hashed_idx = mmh3.hash(key, self._hash_seed[time]) % self._bit_num
-            self.server.setbit(keyname, key_hashed_idx, 1)
+            key_hashed_idx.append(mmh3.hash(keyname, self._hash_seed[time]) % self._bit_num)
 
-        self._data_count += 1
-        return True
+        lock = acquire_lock_with_timeout(self.server, key)
+        if lock:
+            for idx in key_hashed_idx:
+                self.server.setbit(keyname, idx, 1)
+
+            self._data_count += 1
+            release_lock(self.server, key, lock)
+            return True
+        else:
+            return False
 
     def is_exists(self, key):
         """
@@ -85,17 +94,22 @@ class RedisFilter(BloomFilter):
         """
         keyname = self.redis_key + str(sum(map(ord, key)) % self._block_num)
 
+        lock = acquire_lock_with_timeout(self.server, key)
+
         for time in range(self._hash_num):
-            key_hashed_idx = mmh3.hash(key, self._hash_seed[time]) % self._bit_num
+            key_hashed_idx = mmh3.hash(keyname, self._hash_seed[time]) % self._bit_num
             if not int(self.server.getbit(keyname, key_hashed_idx)):    # 类型？
+                release_lock(self.server, key, lock)
                 return False
+
+        release_lock(self.server, key, lock)
         return True
 
 
 if __name__ == '__main__':
 
     bf = RedisFilter()
-    bf.start(100000000, 0.0001)
+    bf.start(1000, 0.0001)
     # 仅测试输出，正常使用时透明
     print(bf._bit_num, bf._hash_num)
     print(bf._block_num)
