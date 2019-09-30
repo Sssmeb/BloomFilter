@@ -38,7 +38,7 @@ def release_lock(conn, lockname, identifier):
         try:
             pipe.watch(lockname)
             # 判断标志是否相同
-            if pipe.get(lockname) == identifier:
+            if str(pipe.get(lockname), encoding='utf-8') == identifier:
                 pipe.multi()
                 pipe.delete(lockname)
                 pipe.execute()
