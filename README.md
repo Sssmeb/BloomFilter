@@ -1,10 +1,11 @@
 
 布隆过滤器相关知识详解：https://www.jianshu.com/p/e4773b69319d
+分布式锁相关实现：https://www.jianshu.com/p/cf311cfb1689
 
 文件说明：
-- BloomFilter ： 基于单机内存的普通布隆过滤器
-- RedisFilter ： 基于redis实现的分布式布隆过滤器（含分布式锁，可应用于scrapyredis持久化去重）
-
+- BloomFilter ： 基于单机内存的普通布隆过滤器。
+- RedisFilter ： 基于redis实现的分布式布隆过滤器（含分布式锁，可应用于scrapyredis持久化去重）。
+- scrapyredis :  scrapyredis库，用分布式布隆过滤器实现去重功能。
 
 # BloomFilter
 BloomFilter Based on py3(基于py3的布隆过滤器)
